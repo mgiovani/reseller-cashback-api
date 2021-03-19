@@ -8,8 +8,8 @@ install:
 run:
 	poetry run python reseller_cashback_api/manage.py runserver
 
-make-migrations:
-	poetry run python reseller_cashback_api/manage.py make-migrations
+makemigrations:
+	poetry run python reseller_cashback_api/manage.py makemigrations
 
 migrate:
 	poetry run python reseller_cashback_api/manage.py migrate
