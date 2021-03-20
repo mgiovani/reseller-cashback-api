@@ -1,8 +1,7 @@
 import pytest
-from django.contrib.auth.models import User
 from model_bakery import baker
 
-from ..models import Reseller
+from ..models import Reseller, User
 
 pytestmark = pytest.mark.django_db
 
