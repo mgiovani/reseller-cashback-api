@@ -18,6 +18,14 @@ def reseller_data():
 
 
 @pytest.fixture
+def fixed_reseller(reseller_data):
+    reseller = baker.make(Reseller, **reseller_data)
+    reseller.set_password(reseller.password)
+    reseller.save()
+    return reseller
+
+
+@pytest.fixture
 def reseller():
     return baker.make(Reseller)
 
