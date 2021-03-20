@@ -21,7 +21,7 @@ run-docker-mode:
 	docker-compose -f docker-compose.yml up
 
 test:
-	poetry run python reseller_cashback_api/manage.py test
+	PYTHONPATH=reseller_cashback_api poetry run pytest
 
 lint:
 	poetry run flake8 --format pylint
