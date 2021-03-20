@@ -1,26 +1,24 @@
 import pytest
-from django.test import TestCase
 
 from apps.reseller.serializers import ResellerSerializer
 
+pytestmark = pytest.mark.django_db
 
-class ResellerSerializerTestCase(TestCase):
 
-    def setUp(self):
-        self.reseller_valid_data = {
-            'name': 'John Smith',
-            'cpf': '123.456.789-90',
-            'user': {
-                'email': 'test@a.com',
-                'password': 'secure_password',
-            }
-        }
-        self.reseller_invalid_data = {'any': 'thing'}
+@pytest.fixture
+def reseller_valid_data(reseller_data, user_data):
+    return reseller_data | {'user': user_data}
 
-    def test_reseller_serializer_is_valid_with_all_fields(self):
-        serializer = ResellerSerializer(data=self.reseller_valid_data)
-        self.assertTrue(serializer.is_valid())
 
-    def test_reseller_serializer_is_not_valid_without_required_fields(self):
-        serializer = ResellerSerializer(data=self.reseller_invalid_data)
-        self.assertFalse(serializer.is_valid())
+def test_reseller_serializer_is_valid_with_all_fields(reseller_valid_data):
+    serializer = ResellerSerializer(data=reseller_valid_data)
+    assert serializer.is_valid() is True
+
+
+@pytest.mark.parametrize("required_field", ['name', 'cpf', 'user'])
+def test_reseller_serializer_is_not_valid_without_required_fields(
+        reseller_valid_data, required_field):
+    del reseller_valid_data[required_field]
+
+    serializer = ResellerSerializer(data=reseller_valid_data)
+    assert serializer.is_valid() is False

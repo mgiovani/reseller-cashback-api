@@ -1,29 +1,22 @@
-from django.core.exceptions import ValidationError
-from django.test import TestCase
-from django.contrib.auth.models import User
-from model_bakery import baker
+import pytest
+from django.db.utils import IntegrityError
 
 from ..models import Reseller
 
+pytestmark = pytest.mark.django_db
 
-class ResellerModelTestCase(TestCase):
 
-    def setUp(self):
-        self.user = baker.make(User, username='user', email='test@a.com',
-                               is_staff=False, is_superuser=False)
+def test_reseller_model_can_be_created(user, reseller_data):
+    reseller = Reseller.objects.create(user=user, **reseller_data)
+    assert isinstance(reseller, Reseller)
+    assert reseller.name == reseller_data['name']
+    assert reseller.cpf == reseller_data['cpf']
 
-    def test_reseller_model_can_be_created(self):
-        reseller = Reseller.objects.create(
-            name='John Smith', cpf='123.456.789-90', user=self.user)
-        self.assertTrue(isinstance(reseller, Reseller))
-        self.assertEqual(reseller.name, 'John Smith')
-        self.assertEqual(reseller.cpf, '123.456.789-90')
 
-    def test_reseller_model_cannot_be_created_without_name(self):
-        reseller = Reseller.objects.create(
-            cpf='123.456.789-90', user=self.user)
-        self.assertRaises(ValidationError, reseller.full_clean)
+@pytest.mark.parametrize("required_field", ['name', 'cpf'])
+def test_reseller_model_cannot_be_created_without_name(
+        reseller_data, required_field):
+    del reseller_data[required_field]
 
-    def test_reseller_model_cannot_be_created_without_cpf(self):
-        reseller = Reseller.objects.create(name='John Smith', user=self.user)
-        self.assertRaises(ValidationError, reseller.full_clean)
+    with pytest.raises(IntegrityError):
+        Reseller.objects.create(**reseller_data)
