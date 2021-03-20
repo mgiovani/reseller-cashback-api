@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from apps.order.models import Order
+from apps.order.models import Order, OrderStatus
 from apps.reseller.models import Reseller
 from apps.reseller.serializers import ResellerSerializer
 
@@ -12,7 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('code', 'price', 'date', 'status', 'cpf', 'reseller')
+        fields = ('id', 'code', 'price', 'date', 'status', 'cpf', 'reseller')
         read_only_fields = ('reseller',)
         extra_kwargs = {
             'price': {'required': True},
@@ -26,3 +26,9 @@ class OrderSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({'cpf': 'Wrong CPF'})
         order = Order.objects.create(**validated_data, reseller=reseller)
         return order
+
+    def update(self, instance, validated_data):
+        if instance.status != OrderStatus.VALIDATION.name:
+            raise serializers.ValidationError(
+                {'order': 'Cannot change completed orders'})
+        return super().update(instance, validated_data)

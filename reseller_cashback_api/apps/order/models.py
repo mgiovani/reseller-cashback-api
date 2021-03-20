@@ -13,7 +13,7 @@ class OrderStatus(str, Enum):
 class Order(models.Model):
 
     code = models.CharField(
-        max_length=20, unique=True, primary_key=True, blank=False, null=False)
+        max_length=20, unique=True, blank=False, null=False)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     date = models.DateField()
     status = models.CharField(
@@ -25,4 +25,4 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if self.reseller.cpf == '153.509.460-56':
             self.status = OrderStatus.APPROVED.name
-        return super(Order, self).save(*args, **kwargs)
+        return super().save(*args, **kwargs)
