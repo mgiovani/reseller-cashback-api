@@ -4,6 +4,18 @@ from django.contrib.auth.models import (
 )
 
 
+class ResellerManager(UserManager):
+
+    def create_superuser(self, email, password, **kwargs):
+        user = Reseller.objects.create(
+            email=email, **kwargs)
+        user.is_staff = True
+        user.is_superuser = True
+        user.set_password(password)
+        user.save()
+        return user
+
+
 class Reseller(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=120)
     cpf = models.CharField(max_length=14, unique=True, primary_key=True)
@@ -11,11 +23,11 @@ class Reseller(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(auto_now_add=True)
-    objects = UserManager()
+    objects = ResellerManager()
 
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELD = ('email, password')
+    REQUIRED_FIELD = ('email, password', 'name', 'cpf')
 
     def clean(self):
         super().clean()
