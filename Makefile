@@ -5,6 +5,9 @@ install:
 	@echo "Now set your envvars at .env file and use source .env to load them"
 	@echo "=================================================================="
 
+dev-db:
+	poetry run docker-compose -f dev.yml up -d
+
 run:
 	poetry run python reseller_cashback_api/manage.py runserver
 
