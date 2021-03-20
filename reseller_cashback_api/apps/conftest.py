@@ -7,6 +7,7 @@ from .order.models import Order
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.fixture
 def order_data():
     return {
@@ -15,11 +16,12 @@ def order_data():
         'date': '2021-03-20',
     }
 
+
 @pytest.fixture
 def reseller_data():
     return {
         'name': 'John Smith',
-        'cpf': '123.456.789-90',
+        'cpf': '153.509.460-56',
         'email': 'test@a.com',
         'password': 'secure_password',
     }
@@ -36,6 +38,7 @@ def fixed_reseller(reseller_data):
     reseller.set_password(reseller.password)
     reseller.save()
     return reseller
+
 
 @pytest.fixture
 def reseller():

@@ -17,6 +17,7 @@ class ResellerManager(UserManager):
 
 
 class Reseller(AbstractBaseUser, PermissionsMixin):
+
     name = models.CharField(max_length=120, blank=False, null=False)
     cpf = models.CharField(
         max_length=14, unique=True, primary_key=True, blank=False, null=False)
