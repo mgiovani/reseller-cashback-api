@@ -17,8 +17,8 @@ def test_reseller_model_can_be_created(reseller_data):
 @pytest.mark.parametrize("required_field", ['name', 'cpf', 'email'])
 def test_reseller_model_cannot_be_created_without_required_fields(
         reseller_data, required_field):
-    del reseller_data[required_field]
 
+    del reseller_data[required_field]
     with pytest.raises(ValidationError):
         reseller = Reseller.objects.create(**reseller_data)
         reseller.full_clean()

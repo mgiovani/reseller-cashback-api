@@ -18,8 +18,8 @@ def reseller_data():
 
 
 @pytest.fixture
-def reseller(user):
-    return baker.make(Reseller, user=user)
+def reseller():
+    return baker.make(Reseller)
 
 
 @pytest.fixture
