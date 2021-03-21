@@ -17,8 +17,12 @@ makemigrations:
 migrate:
 	poetry run python reseller_cashback_api/manage.py migrate
 
+build:
+	docker build . -t reseller-cashback
+
 run-docker-mode:
-	docker-compose -f docker-compose.yml up
+	@make build
+	poetry run docker-compose -f dev.yml up
 
 test:
 	PYTHONPATH=reseller_cashback_api poetry run pytest
