@@ -204,6 +204,6 @@ Project Link: [https://github.com/mgiovani/reseller-cashback-api](https://github
 [issues-shield]: https://img.shields.io/github/issues/mgiovani/reseller-cashback-api.svg?style=for-the-badge
 [issues-url]: https://github.com/mgiovani/reseller-cashback-api/issues
 [license-shield]: https://img.shields.io/github/license/mgiovani/reseller-cashback-api.svg?style=for-the-badge
-[license-url]: https://github.com/mgiovani/reseller-cashback-api/blob/main/LICENSE.txt
+[license-url]: https://github.com/mgiovani/reseller-cashback-api/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/mgiovani
