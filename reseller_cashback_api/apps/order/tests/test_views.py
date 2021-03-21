@@ -1,5 +1,6 @@
 import json
 from decimal import Decimal
+from unittest import mock
 
 import pytest
 from rest_framework import status
@@ -105,3 +106,16 @@ def test_order_endpoint_cannot_update_order_with_approved_status(
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert 'order' in response_data
     assert 'Cannot change completed orders' in response_data['order']
+
+
+def test_accumulated_cashback_endpoint(api_client):
+    reversed_url = reverse('accumulated-cashback')
+    with mock.patch('apps.order.api.requests.get') as mock_get:
+        mock_get.return_value.json.return_value = {
+            'statusCode': 200, 'body': {'credit': 100}}
+
+        response = api_client.get(path=reversed_url)
+        response_data = response.json()
+        assert response.status_code == status.HTTP_200_OK
+        assert 'credit' in response_data
+        assert response_data['credit'] == 100
