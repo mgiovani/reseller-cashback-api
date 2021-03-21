@@ -56,7 +56,7 @@
 
 ## About The Project
 
-<img src="images/admin.png" alt="Project screenshot">
+<img src="images/reseller.png" alt="Project screenshot">
 
 
 ### Built With
@@ -102,15 +102,20 @@ If you want to run this project with Docker, you will need:
        ```sh
        source .env
        ```
-
     3. Migrate database
        ```sh
        make migrate
        ```
-    4. Run the code
+    4. Create superuser
+       ```sh
+       make create-superuser
+       ```
+    5. Run the code
        ```sh
        make run
        ```
+    6. Get your superuser JWT token at `/login/`
+
 3. Running with Docker:
     1. Copy env.example
        ```sh
@@ -124,10 +129,15 @@ If you want to run this project with Docker, you will need:
        ```sh
        source .env
        ```
-    4. Run the code
+    4. Create superuser
+       ```sh
+       make create-docker-superuser
+       ```
+    5. Run the code
        ```sh
        make run-docker-mode
        ```
+    6. Get your superuser JWT token at `/login/`
 
 ## Usage
 

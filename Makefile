@@ -12,7 +12,7 @@ create-superuser:
 	poetry run python reseller_cashback_api/manage.py createsuperuser
 
 create-docker-superuser:
-	poetry run python reseller_cashback_api/manage.py createsuperuser
+	docker exec -it reseller-cashback-api_web_1 poetry run python reseller_cashback_api/manage.py createsuperuser
 
 run:
 	poetry run python reseller_cashback_api/manage.py runserver
