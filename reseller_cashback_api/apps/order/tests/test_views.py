@@ -1,4 +1,5 @@
 import json
+from decimal import Decimal
 
 import pytest
 from rest_framework import status
@@ -9,7 +10,16 @@ from apps.order.models import OrderStatus
 pytestmark = pytest.mark.django_db
 
 
-def test_order_endpoint_list_orders(api_client, order):
+@pytest.mark.parametrize(
+    'price, cashback_percent, cashback_total',
+    [('2000.00', '0.20', '400.00'),
+     ('1500.00', '0.15', '225.00'),
+     ('1000.00', '0.10', '100.00'),
+     ])
+def test_order_endpoint_list_orders(price, cashback_percent, cashback_total,
+                                    api_client, order):
+    order.price = Decimal(price)
+    order.save()
     reversed_url = reverse('order')
     response = api_client.get(path=reversed_url)
     response_data = response.json()
@@ -17,9 +27,11 @@ def test_order_endpoint_list_orders(api_client, order):
     assert response.status_code == status.HTTP_200_OK
     assert len(response_data) == 1
     assert response_data[0]['code'] == order.code
-    assert response_data[0]['price'] == str(order.price)
     assert response_data[0]['date'] == order.date.isoformat()
     assert response_data[0]['status'] == order.status
+    assert response_data[0]['price'] == str(price)
+    assert response_data[0]['cashback_percent'] == cashback_percent
+    assert response_data[0]['cashback_total'] == cashback_total
     assert 'reseller' in response_data[0]
 
 

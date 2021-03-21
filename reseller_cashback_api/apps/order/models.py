@@ -31,12 +31,13 @@ class Order(models.Model):
     @property
     def cashback_percent(self):
         if self.price <= Decimal('1000'):
-            return Decimal('0.1')
+            return '0.10'
         if self.price <= Decimal('1500'):
-            return Decimal('0.15')
+            return '0.15'
         if self.price > Decimal('1500'):
-            return Decimal('0.20')
+            return '0.20'
 
     @property
     def cashback_total(self):
-        return round(self.price * self.cashback_percent, 2)
+        cashback_total = round(self.price * Decimal(self.cashback_percent), 2)
+        return str(cashback_total)
