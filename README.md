@@ -89,7 +89,7 @@ If you want to run this project with Docker, you will need:
    ```sh
    git clone https://github.com/mgiovani/reseller-cashback-api.git
    ```
-2. (Optional) Download the [Insomnia](https://insomnia.rest/) file at `docs/reseller-cashback-insomnia.json` to get all requests configured.
+2. (Optional) Import the [Insomnia](https://insomnia.rest/) file at `docs/reseller-cashback-insomnia.json` to get all requests configured.
 3. Running locally:
     1. Install dependencies
        ```sh
