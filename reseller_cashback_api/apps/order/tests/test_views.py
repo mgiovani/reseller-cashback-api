@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from rest_framework import status
 from rest_framework.reverse import reverse
@@ -66,3 +68,28 @@ def test_order_endpoint_can_create_order_with_valid_data_validation(
     assert response_data['date'] == order_data['date']
     assert response_data['status'] == OrderStatus.VALIDATION.name
     assert 'reseller' in response_data
+
+
+@pytest.mark.parametrize('method', ['put', 'patch', 'delete'])
+def test_order_endpoint_cannot_update_order_with_approved_status(
+        api_client, fixed_order, method, order_data, reseller):
+    reversed_url = reverse('order')
+    response = api_client.get(path=reversed_url)
+    response_data = response.json()
+    order_id = response_data[0]['id']
+
+    assert response.status_code == status.HTTP_200_OK
+    assert len(response_data) == 1
+    assert response_data[0]['status'] == OrderStatus.APPROVED.name
+
+    order_data = order_data | {'cpf': reseller.cpf, 'code': 'CHANGED'}
+    response = api_client.generic(
+        method=method,
+        path=f'{reversed_url}{order_id}/',
+        data=json.dumps(order_data),
+        content_type='application/json')
+    response_data = response.json()
+
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert 'order' in response_data
+    assert 'Cannot change completed orders' in response_data['order']

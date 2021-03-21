@@ -19,5 +19,5 @@ class OrderDetailView(RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         if instance.status != OrderStatus.VALIDATION.name:
             raise ValidationError(
-                {'order': 'cannot change completed orders'})
+                {'order': 'Cannot change completed orders'})
         return super().destroy(self, request, *args, **kwargs)
