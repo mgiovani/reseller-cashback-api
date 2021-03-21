@@ -8,6 +8,12 @@ install:
 dev-db:
 	poetry run docker-compose -f dev.yml up -d postgres
 
+create-superuser:
+	poetry run python reseller_cashback_api/manage.py createsuperuser
+
+create-docker-superuser:
+	poetry run python reseller_cashback_api/manage.py createsuperuser
+
 run:
 	poetry run python reseller_cashback_api/manage.py runserver
 

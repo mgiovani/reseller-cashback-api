@@ -87,8 +87,8 @@ def test_reseller_endpoint_can_check_credentials(
     response_data = response.json()
 
     assert response.status_code == status.HTTP_200_OK
-    assert 'status' in response_data
-    assert 'OK' in response_data['status']
+    assert 'access' in response_data
+    assert 'refresh' in response_data
 
 
 def test_reseller_endpoint_can_check_wrong_credentials(
@@ -101,6 +101,6 @@ def test_reseller_endpoint_can_check_wrong_credentials(
     response = api_client.post(path=reversed_url, data=credentials)
     response_data = response.json()
 
-    assert response.status_code == status.HTTP_400_BAD_REQUEST
-    assert 'error' in response_data
-    assert 'Wrong credentials' in response_data['error']
+    assert response.status_code == status.HTTP_401_UNAUTHORIZED
+    assert 'detail' in response_data
+    assert 'No active account' in response_data['detail']

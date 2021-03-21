@@ -9,7 +9,7 @@ services:
         ports:
             - 5432:5432
         volumes:
-            - ../reseller-cashback-pgdata:/var/lib/postgresql/data
+            - ../.reseller-cashback-pgdata:/var/lib/postgresql/data
 
     migrations:
         build:
