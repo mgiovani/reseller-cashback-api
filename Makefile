@@ -6,7 +6,7 @@ install:
 	@echo "=================================================================="
 
 dev-db:
-	poetry run docker-compose -f dev.yml up -d
+	poetry run docker-compose -f dev.yml up -d postgres
 
 run:
 	poetry run python reseller_cashback_api/manage.py runserver
