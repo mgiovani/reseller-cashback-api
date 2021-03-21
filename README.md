@@ -10,7 +10,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/mgiovani/reseller-cashback-api">
-    <img src="images/logo.png" alt="Logo" width="400" height="300">
+    <img src="images/logo.png" alt="Logo" width="600" height="273">
   </a>
 
   <h3 align="center">Reseller Cashback API</h3>
