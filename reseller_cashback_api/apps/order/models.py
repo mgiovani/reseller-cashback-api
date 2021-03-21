@@ -1,3 +1,4 @@
+from decimal import Decimal, getcontext
 from enum import Enum
 
 from django.db import models
@@ -26,3 +27,16 @@ class Order(models.Model):
         if self.reseller.cpf == '153.509.460-56':
             self.status = OrderStatus.APPROVED.name
         return super().save(*args, **kwargs)
+
+    @property
+    def cashback_percent(self):
+        if self.price <= Decimal('1000'):
+            return Decimal('0.1')
+        if self.price <= Decimal('1500'):
+            return Decimal('0.15')
+        if self.price > Decimal('1500'):
+            return Decimal('0.20')
+
+    @property
+    def cashback_total(self):
+        return round(self.price * self.cashback_percent, 2)

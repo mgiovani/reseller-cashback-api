@@ -12,8 +12,10 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'code', 'price', 'date', 'status', 'cpf', 'reseller')
-        read_only_fields = ('reseller',)
+        fields = (
+            'id', 'code', 'price', 'date', 'status',
+            'cpf', 'reseller', 'cashback_percent', 'cashback_total')
+        read_only_fields = ('reseller', 'cashback_percent', 'cashback_total')
         extra_kwargs = {
             'price': {'required': True},
             'date': {'required': True}}

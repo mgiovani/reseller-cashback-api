@@ -129,3 +129,7 @@ STATIC_URL = '/static/'
 
 # Custom Confis
 AUTH_USER_MODEL = 'reseller.Reseller'
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False
+}
