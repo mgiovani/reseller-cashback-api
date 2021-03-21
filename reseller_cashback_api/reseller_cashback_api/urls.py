@@ -10,4 +10,5 @@ urlpatterns = [
     path('login/', reseller_views.ResellerLoginView.as_view(), name='login'),
     path('order/<str:pk>/', order_views.OrderDetailView.as_view(), name='order-detail'),  # noqa
     path('order/', order_views.OrderView.as_view(), name='order'),
+    path('accumulated-cashback/', order_views.AccumulatedCashbackView.as_view(), name='accumulated-cashback'),  # noqa
 ]
