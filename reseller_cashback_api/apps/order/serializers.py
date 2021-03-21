@@ -23,7 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         cpf = validated_data.pop('cpf')
         try:
-            reseller = Reseller.objects.get(pk=cpf)
+            reseller = Reseller.objects.get(cpf=cpf)
         except ObjectDoesNotExist:
             raise serializers.ValidationError({'cpf': 'Wrong CPF'})
         order = Order.objects.create(**validated_data, reseller=reseller)
