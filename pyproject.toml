@@ -6,22 +6,32 @@ authors = ["Giovani Moutinho <giovanim@ymail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
-Django = "^3.1.7"
-djangorestframework = "^3.12.2"
-Markdown = "^3.3.4"
+Django = ">=3.2.25,<4.0"
+djangorestframework = ">=3.15.1,<4.0"
+Markdown = ">=3.8.1"
 django-filter = "^2.4.0"
 prettyconf = "^2.2.1"
 psycopg2-binary = "^2.8.6"
 retrying = "^1.3.3"
-requests = "^2.25.1"
-gunicorn = "^20.0.4"
-djangorestframework-simplejwt = "^4.6.0"
+requests = [
+    {version = ">=2.33.0", python = ">=3.10"},
+    {version = ">=2.32.5,<2.33.0", python = ">=3.9,<3.10"}
+]
+gunicorn = ">=22.0.0"
+urllib3 = ">=2.6.3"
+PyJWT = ">=2.12.0"
+sqlparse = ">=0.5.4"
+idna = ">=3.7"
+certifi = ">=2023.7.22"
+djangorestframework-simplejwt = ">=5.3.1,<5.4.0"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.0"
-docker-compose = "^1.28.5"
 autopep8 = "^1.5.6"
-pytest = "^6.2.2"
+pytest = [
+    {version = ">=9.0.3", python = ">=3.10"},
+    {version = ">=8.3.5,<9.0", python = ">=3.9,<3.10"}
+]
 pytest-django = "^4.1.0"
 model-bakery = "^1.2.1"
 
